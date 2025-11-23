@@ -1,0 +1,364 @@
+{
+  "info": {
+    "name": "Daily AI Agent API",
+    "description": "API collection for Personal AI Agent platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\",\n  \"full_name\": \"Test User\",\n  \"timezone\": \"UTC\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/logout",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/users/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Updated Name\",\n  \"timezone\": \"America/New_York\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/users/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "users", "profile"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Automation Settings",
+      "item": [
+        {
+          "name": "List Automation Settings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/automation_settings",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "automation_settings"]
+            }
+          }
+        },
+        {
+          "name": "Create Automation Setting",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Crypto Price Alerts\",\n  \"automation_type\": \"crypto\",\n  \"configuration\": {\n    \"symbols\": [\"BTC\", \"ETH\"],\n    \"alert_threshold\": 5.0\n  },\n  \"enabled\": true,\n  \"priority\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/automation_settings",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "automation_settings"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Scheduler Jobs",
+      "item": [
+        {
+          "name": "List Scheduler Jobs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/scheduler_jobs",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "scheduler_jobs"]
+            }
+          }
+        },
+        {
+          "name": "Create Scheduler Job",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Daily Summary\",\n  \"job_type\": \"daily_summary\",\n  \"schedule\": \"0 8 * * *\",\n  \"job_parameters\": {\n    \"include_crypto\": true,\n    \"include_calendar\": true\n  },\n  \"enabled\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/scheduler_jobs",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "scheduler_jobs"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Crypto Data",
+      "item": [
+        {
+          "name": "Get Current Prices",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/crypto_data/prices?symbols=BTC,ETH,SOL",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "crypto_data", "prices"],
+              "query": [
+                {
+                  "key": "symbols",
+                  "value": "BTC,ETH,SOL"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Alerts",
+      "item": [
+        {
+          "name": "List Alerts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/alerts",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "alerts"]
+            }
+          }
+        },
+        {
+          "name": "Create Alert",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alert_type\": \"crypto_price\",\n  \"title\": \"BTC Price Alert\",\n  \"message\": \"Bitcoin price increased by 5%\",\n  \"severity\": \"info\",\n  \"metadata\": {\n    \"symbol\": \"BTC\",\n    \"price\": 43250.50\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/alerts",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "alerts"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Summaries",
+      "item": [
+        {
+          "name": "Generate AI Summary",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"summary_type\": \"daily\",\n  \"summary_date\": \"2023-11-23\",\n  \"ai_model\": \"gpt-3.5-turbo\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/ai_summaries/generate",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "ai_summaries", "generate"]
+            }
+          }
+        },
+        {
+          "name": "List AI Summaries",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/ai_summaries",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "ai_summaries"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Check Health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+class TelegramLink < ApplicationRecord
+  belongs_to :user
+  
+  validates :telegram_user_id, presence: true, uniqueness: true
+  validates :telegram_username, length: { maximum: 100 }, allow_blank: true
+  
+  before_create :generate_verification_code
+  
+  scope :active, -> { where(active: true) }
+  scope :verified, -> { where(verified: true) }
+  scope :pending_verification, -> { where(verified: false) }
+  
+  def verify!(code)
+    if verification_code == code
+      update!(
+        verified: true,
+        verified_at: Time.current,
+        verification_code: nil
+      )
+      true
+    else
+      false
+    end
+  end
+  
+  def regenerate_verification_code!
+    generate_verification_code
+    save!
+  end
+  
+  private
+  
+  def generate_verification_code
+    self.verification_code = SecureRandom.alphanumeric(6).upcase
+  end
+end
