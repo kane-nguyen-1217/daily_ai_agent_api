@@ -16,7 +16,7 @@ A comprehensive Ruby on Rails backend API for a multi-user Personal AI Agent pla
 
 ## Technology Stack
 
-- **Ruby**: 3.2.x
+- **Ruby**: 3.3.x
 - **Rails**: 7.0.x
 - **Database**: PostgreSQL
 - **Background Jobs**: Sidekiq with Redis
@@ -28,7 +28,7 @@ A comprehensive Ruby on Rails backend API for a multi-user Personal AI Agent pla
 
 ### Prerequisites
 
-- Ruby 3.2.x
+- Ruby 3.3.x
 - PostgreSQL
 - Redis (for Sidekiq)
 

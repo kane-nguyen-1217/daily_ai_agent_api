@@ -22,7 +22,7 @@ Thank you for your interest in contributing to Daily AI Agent API! This document
 
 ### Prerequisites
 
-- Ruby 3.2.x
+- Ruby 3.3.x
 - PostgreSQL 12+
 - Redis 6+
 - Git

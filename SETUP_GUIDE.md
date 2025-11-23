@@ -6,7 +6,7 @@ This guide will help you set up and run the Daily AI Agent API on your local mac
 
 Before you begin, ensure you have the following installed:
 
-- **Ruby 3.2.x** - [Installation Guide](https://www.ruby-lang.org/en/documentation/installation/)
+- **Ruby 3.3.x** - [Installation Guide](https://www.ruby-lang.org/en/documentation/installation/)
 - **PostgreSQL 12+** - [Download](https://www.postgresql.org/download/)
 - **Redis 6+** - [Download](https://redis.io/download)
 - **Bundler** - Install with `gem install bundler`
