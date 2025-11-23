@@ -52,10 +52,10 @@ gem 'sidekiq', '~> 7.1'
 gem 'lockbox', '~> 1.3'
 
 # Blind indexing for encrypted fields
-gem 'blind_index', '~> 2.4'
+gem 'blind_index'
 
 # Environment variable management
-gem 'dotenv-rails', '~> 2.8'
+gem 'dotenv-rails'
 
 # API versioning
 gem 'versionist', '~> 2.0'
