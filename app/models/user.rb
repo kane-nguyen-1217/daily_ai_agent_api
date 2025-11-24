@@ -12,7 +12,7 @@ class User < ApplicationRecord
             format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, length: { minimum: 8 }, if: -> { new_record? || !password.nil? }
   validates :full_name, length: { maximum: 100 }, allow_blank: true
-  validates :timezone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }, allow_blank: true
+  # validates :timezone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }, allow_blank: true
   
   before_save :downcase_email
   

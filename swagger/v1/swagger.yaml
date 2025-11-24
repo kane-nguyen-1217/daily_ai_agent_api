@@ -51,16 +51,36 @@ paths:
               required:
                 - email
                 - password
-                - name
+                - full_name
               properties:
                 email:
                   type: string
                   format: email
+                  example: "user@example.com"
                 password:
                   type: string
                   format: password
-                name:
+                  minLength: 8
+                  example: "password123"
+                password_confirmation:
                   type: string
+                  format: password
+                  example: "password123"
+                full_name:
+                  type: string
+                  example: "John Doe"
+                timezone:
+                  type: string
+                  example: "UTC"
+            examples:
+              newUser:
+                summary: New user registration
+                value:
+                  email: "newuser@example.com"
+                  password: "password123"
+                  password_confirmation: "password123"
+                  full_name: "John Doe"
+                  timezone: "America/New_York"
       responses:
         '201':
           description: User registered successfully
@@ -68,8 +88,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AuthResponse'
+              examples:
+                success:
+                  summary: Successful registration
+                  value:
+                    message: "User created successfully"
+                    token: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjQwODczNDZ9.XttHad8oGL9dOuZnenVZJi4xFhJvls6M4NGp3hhWAGY"
+                    user:
+                      id: 1
+                      email: "newuser@example.com"
+                      full_name: "John Doe"
+                      timezone: "America/New_York"
+                      active: true
+                      created_at: "2025-11-24T16:15:46.234Z"
         '422':
           description: Validation error
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  summary: Validation failed
+                  value:
+                    errors: ["Email has already been taken", "Password is too short"]
   
   /api/v1/auth/login:
     post:
@@ -89,9 +129,17 @@ paths:
                 email:
                   type: string
                   format: email
+                  example: "user@example.com"
                 password:
                   type: string
                   format: password
+                  example: "password123"
+            examples:
+              login:
+                summary: User login
+                value:
+                  email: "testuser@example.com"
+                  password: "password123"
       responses:
         '200':
           description: Login successful
@@ -99,8 +147,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AuthResponse'
+              examples:
+                success:
+                  summary: Successful login
+                  value:
+                    message: "Login successful"
+                    token: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjQwODczNTV9.s8Htx92wT5kAYLhPbEeQItEbrGexgF6eRqS9d8AhlaQ"
+                    refresh_token: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjQ2MDU3NTV9.FqAzxkDRCICzah6wz7i6w8xqcImPFiLFpq8oJIevQik"
+                    user:
+                      id: 1
+                      email: "testuser@example.com"
+                      full_name: "Test User"
+                      timezone: "UTC"
+                      active: true
+                      created_at: "2025-11-24T16:15:46.234Z"
         '401':
           description: Invalid credentials
+          content:
+            application/json:
+              examples:
+                invalid_credentials:
+                  summary: Invalid email or password
+                  value:
+                    error: "Invalid email or password"
   
   /api/v1/auth/refresh:
     post:
