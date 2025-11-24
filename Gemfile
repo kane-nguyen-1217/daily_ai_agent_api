@@ -60,12 +60,17 @@ gem 'dotenv-rails'
 # API versioning
 gem 'versionist', '~> 2.0'
 
+# Swagger/OpenAPI documentation
+gem 'rswag-api'
+gem 'rswag-ui'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
   gem 'rspec-rails', '~> 6.0'
   gem 'factory_bot_rails', '~> 6.2'
   gem 'faker', '~> 3.2'
+  gem 'rswag-specs'
 end
 
 group :development do
