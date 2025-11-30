@@ -1,5 +1,11 @@
-# Documentation
+# Document###### **🚀 [Deployment](deployment/)**
+- [`CAPISTRANO_DEPLOYMENT.md`](deployment/CAPISTRANO_DEPLOYMENT.md) - Automated deployment with Capistrano
+- [`PRODUCTION_DEPLOYMENT.md`](deployment/PRODUCTION_DEPLOYMENT.md) - Manual production deployment
+- VPS, Heroku, and cloud platform setup*� [Deployment](deployment/)**
+- [`PRODUCTION_DEPLOYMENT.md`](deployment/PRODUCTION_DEPLOYMENT.md) - Production deployment guide
+- VPS, Heroku, and cloud platform setup
 
+### **�🔗 [API Reference](api/)**
 This folder contains all documentation for the Daily AI Agent API, organized by feature and functionality.
 
 ## � Documentation Structure
@@ -8,7 +14,12 @@ This folder contains all documentation for the Daily AI Agent API, organized by 
 - [`SETUP_GUIDE.md`](setup/SETUP_GUIDE.md) - Complete installation and configuration guide
 - Environment setup, database configuration, deployment guides
 
-### **🔗 [API Reference](api/)**
+### **� [Deployment](deployment/)**
+- [`DOCKER_DEPLOYMENT.md`](deployment/DOCKER_DEPLOYMENT.md) - Complete Docker setup guide
+- [`README.md`](deployment/README.md) - Deployment overview and configuration
+- Environment templates and production setup
+
+### **�🔗 [API Reference](api/)**
 - [`API_DOCUMENTATION.md`](api/API_DOCUMENTATION.md) - Complete API endpoint reference
 - [`SWAGGER_DOCUMENTATION.md`](api/SWAGGER_DOCUMENTATION.md) - OpenAPI/Swagger documentation
 - [`api_collection.json`](api/api_collection.json) - Postman/Insomnia collection

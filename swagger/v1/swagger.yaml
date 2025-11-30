@@ -14,7 +14,7 @@ info:
 servers:
   - url: http://localhost:3000
     description: Development server
-  - url: https://api.yourdomain.com
+  - url: https://api.pers-ai-agent.dev
     description: Production server
 paths:
   /health:

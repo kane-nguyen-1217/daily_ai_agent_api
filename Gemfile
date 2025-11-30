@@ -79,6 +79,14 @@ group :development do
 
   # Annotate models with schema information
   gem 'annotate', '~> 3.2'
+
+  # Capistrano deployment
+  gem 'capistrano', '~> 3.18'
+  gem 'capistrano3-puma', github: 'seuros/capistrano-puma'
+  gem 'capistrano-bundler', '~> 2.0'
+  gem 'capistrano-rails', '~> 1.6'
+  gem 'capistrano-rbenv', '~> 2.2'
+  gem 'capistrano-sidekiq', '~> 2.3'
 end
 
 group :test do

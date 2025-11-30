@@ -20,7 +20,7 @@ Comprehensive installation guide:
 - **Environment variables** - Configuration options
 - **Database setup** - PostgreSQL and Redis configuration  
 - **Testing setup** - Running the test suite
-- **Production deployment** - Docker and manual deployment
+- **Production deployment** - VPS and cloud platform deployment
 - **Troubleshooting** - Common setup issues
 
 ## 🛠️ Quick Start
@@ -172,7 +172,7 @@ sudo systemctl enable redis-server
 ```
 
 #### Windows
-Download from: https://redis.io/download or use Docker
+Download from: https://redis.io/download
 
 ### **Verification**
 ```bash

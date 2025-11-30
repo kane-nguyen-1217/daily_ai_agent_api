@@ -21,23 +21,40 @@ port ENV.fetch("PORT") { 3000 }
 #
 environment ENV.fetch("RAILS_ENV") { "development" }
 
-# Specifies the `pidfile` that Puma will use.
-pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
-
-# Specifies the number of `workers` to boot in clustered mode.
-# Workers are forked web server processes. If using threads and workers together
-# the concurrency of the application would be max `threads` * `workers`.
-# Workers do not work on JRuby or Windows (both of which do not support
-# processes).
-#
-# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
-
-# Use the `preload_app!` method when specifying a `workers` number.
-# This directive tells Puma to first boot the application and load code
-# before forking the application. This takes advantage of Copy On Write
-# process behavior so workers use less memory.
-#
-# preload_app!
+# Production-specific configuration
+if ENV["RAILS_ENV"] == "production"
+  # Number of workers (should match server CPU cores)
+  workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+  
+  # Unix socket for nginx reverse proxy
+  bind "unix://#{Dir.pwd}/tmp/sockets/puma.sock"
+  
+  # Logging
+  stdout_redirect "log/puma.stdout.log", "log/puma.stderr.log", true
+  
+  # Set master PID and state locations for Capistrano
+  pidfile "tmp/pids/puma.pid"
+  state_path "tmp/pids/puma.state"
+  
+  # Preload application for better memory usage
+  preload_app!
+  
+  # Worker timeout for production
+  worker_timeout 60
+  worker_boot_timeout 60
+  
+  # Restart workers on code changes
+  on_worker_boot do
+    ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+  end
+  
+  on_restart do
+    puts 'Refreshing Gemfile'
+    ENV["BUNDLE_GEMFILE"] = ""
+  end
+else
+  # Development configuration keeps existing settings
+end
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart

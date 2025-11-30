@@ -1,26 +1,53 @@
 # Daily AI Agent API
 
-A comprehensive Ruby on Rails API backend for a Personal AI Agent platform with calendar integration, automation, and multi-service connectivity.
+A comprehensive Ruby on Rails API ba## 📖 Documentation
+
+All documentation is organized by feature in the [`docs/`](docs/) folder:
+
+- **[📋 Documentation Index](docs/INDEX.md)** - Complete documentation overview
+- **[️ Setup & Installation](docs/setup/)** - Installation, configuration, deployment
+- **[📅 Calendar Integration](docs/calendar-integration/)** - Google/Microsoft calendar setup
+- **[🗄️ Database Schema](docs/database/)** - Complete database documentation  
+- **[📡 API Reference](docs/api/)** - Endpoints, Swagger, testing tools
+- **[🔐 OAuth Integration](docs/oauth-integration/)** - Google/Microsoft OAuth setup
+- **[🛠️ Development](docs/development/)** - Contributing, architecture, standards Personal AI Agent platform with calendar integration, automation, and multi-service connectivity.
 
 ## 🚀 Quick Start
 
+### Prerequisites
+- Ruby 3.2+
+- PostgreSQL 14+
+- Redis 6+
+- Node.js 16+ (for asset compilation)
+
+### Setup
+
 ```bash
-# Clone and setup
+# 1. Clone the repository
 git clone https://github.com/kane-nguyen-1217/daily_ai_agent_api.git
 cd daily_ai_agent_api
+
+# 2. Install dependencies
 bundle install
 
-# Configure environment
+# 3. Configure environment
 cp .env.example .env
-# Edit .env with your configuration
+# Edit .env with your API keys and configuration
 
-# Setup database
+# 4. Setup database
 rails db:create db:migrate db:seed
 
-# Start services
+# 5. Start services
 rails server                 # API server (port 3000)
-bundle exec sidekiq         # Background jobs
+bundle exec sidekiq         # Background jobs (separate terminal)
 ```
+
+**🎉 API is now running at http://localhost:3000!**
+
+### Development Services
+- **API Server**: http://localhost:3000
+- **API Documentation**: http://localhost:3000/api-docs
+- **Sidekiq Web UI**: http://localhost:4567 (if sidekiq-web gem is enabled)
 
 ## 📖 Documentation
 
@@ -165,12 +192,7 @@ See [Contributing Guidelines](docs/development/CONTRIBUTING.md) for detailed dev
 
 ## 📦 Deployment
 
-### **Docker**
-```bash
-docker-compose up -d
-```
-
-### **Production**
+### **Production Server**
 - Set `RAILS_ENV=production`
 - Configure `RAILS_MASTER_KEY`
 - Setup Redis and PostgreSQL

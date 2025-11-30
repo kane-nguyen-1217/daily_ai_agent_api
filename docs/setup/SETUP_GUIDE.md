@@ -41,21 +41,28 @@ cp .env.example .env
 
 Edit `.env` and configure the following:
 
-#### Database Configuration
-```
-DB_HOST=localhost
-DB_USERNAME=postgres
-DB_PASSWORD=your_password
-```
+#### Required Configuration
 
-#### JWT Secret
-Generate a secret key:
+**Database Configuration**
 ```bash
-rails secret
+DB_HOST=localhost
+DB_NAME=daily_ai_agent_api_development
+DB_USERNAME=postgres
+DB_PASSWORD=your_postgres_password
+DB_PORT=5432
 ```
-Copy the output and set it as `JWT_SECRET_KEY` in `.env`
 
-#### Lockbox Master Key
+**Rails Security**
+```bash
+# Generate a secret key
+rails secret
+
+# Add to .env
+SECRET_KEY_BASE=your_generated_secret_key
+JWT_SECRET_KEY=your_jwt_secret_key
+```
+
+**Lockbox Encryption**
 Generate an encryption key:
 ```bash
 ruby -e "require 'securerandom'; puts SecureRandom.hex(32)"
@@ -265,18 +272,16 @@ For production deployment:
 3. Configure a production database
 4. Set up a proper web server (e.g., Nginx with Puma)
 5. Configure SSL/TLS certificates
-6. Set up process monitoring (e.g., systemd, Docker)
+6. Set up process monitoring (e.g., systemd, supervisor)
 7. Configure Redis for production use
 8. Set up log rotation
 9. Configure CORS for your frontend domain
 
-### Quick Production Setup with Docker
+### Production Deployment Options
 
-(Docker support would be added in the next iteration)
-
-```bash
-docker-compose up -d
-```
+- **Traditional VPS**: Deploy to a Linux server with systemd services
+- **Heroku**: Platform-as-a-service deployment
+- **Cloud Platforms**: AWS, GCP, DigitalOcean with managed databases
 
 ## API Documentation
 
