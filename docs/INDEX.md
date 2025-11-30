@@ -1,27 +1,35 @@
 # Documentation
 
-This folder contains all documentation for the Daily AI Agent API.
+This folder contains all documentation for the Daily AI Agent API, organized by feature and functionality.
 
-## 📋 Documentation Index
+## � Documentation Structure
 
-### **Getting Started**
-- [`README.md`](README.md) - Main project overview and quick start
-- [`SETUP_GUIDE.md`](SETUP_GUIDE.md) - Detailed installation and configuration guide
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) - Guidelines for contributing to the project
+### **📖 [Setup & Installation](setup/)**
+- [`SETUP_GUIDE.md`](setup/SETUP_GUIDE.md) - Complete installation and configuration guide
+- Environment setup, database configuration, deployment guides
 
-### **API Documentation**
-- [`API_DOCUMENTATION.md`](API_DOCUMENTATION.md) - Complete API endpoint reference
-- [`SWAGGER_DOCUMENTATION.md`](SWAGGER_DOCUMENTATION.md) - Swagger/OpenAPI documentation
-- [`api_collection.json`](api_collection.json) - Postman/Insomnia API collection
+### **🔗 [API Reference](api/)**
+- [`API_DOCUMENTATION.md`](api/API_DOCUMENTATION.md) - Complete API endpoint reference
+- [`SWAGGER_DOCUMENTATION.md`](api/SWAGGER_DOCUMENTATION.md) - OpenAPI/Swagger documentation
+- [`api_collection.json`](api/api_collection.json) - Postman/Insomnia collection
 
-### **Calendar Integration**
-- [`CALENDAR_INTEGRATION_README.md`](CALENDAR_INTEGRATION_README.md) - Complete calendar setup guide
-- [`CALENDAR_IMPLEMENTATION_SUMMARY.md`](CALENDAR_IMPLEMENTATION_SUMMARY.md) - Implementation details
-- [`CALENDAR_QUICK_REFERENCE.md`](CALENDAR_QUICK_REFERENCE.md) - Quick commands and testing
+### **📅 [Calendar Integration](calendar-integration/)**
+- [`CALENDAR_INTEGRATION_README.md`](calendar-integration/CALENDAR_INTEGRATION_README.md) - Setup guide
+- [`CALENDAR_IMPLEMENTATION_SUMMARY.md`](calendar-integration/CALENDAR_IMPLEMENTATION_SUMMARY.md) - Technical details
+- [`CALENDAR_QUICK_REFERENCE.md`](calendar-integration/CALENDAR_QUICK_REFERENCE.md) - Testing commands
 
-### **Database & Architecture**
-- [`DATABASE_SCHEMA.md`](DATABASE_SCHEMA.md) - Complete database schema documentation
-- [`PROJECT_SUMMARY.md`](PROJECT_SUMMARY.md) - Project overview and architecture
+### **🗄️ [Database Schema](database/)**
+- [`DATABASE_SCHEMA.md`](database/DATABASE_SCHEMA.md) - Complete schema documentation
+- Table structures, relationships, security features
+
+### **🔐 [OAuth Integration](oauth-integration/)**
+- OAuth 2.0 setup for Google and Microsoft services
+- Token management, security, and troubleshooting
+
+### **🛠️ [Development](development/)**
+- [`CONTRIBUTING.md`](development/CONTRIBUTING.md) - Contributing guidelines
+- [`PROJECT_SUMMARY.md`](development/PROJECT_SUMMARY.md) - Architecture overview
+- Coding standards, testing, code review process
 
 ## 🚀 Quick Navigation
 

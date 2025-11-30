@@ -24,13 +24,15 @@ bundle exec sidekiq         # Background jobs
 
 ## 📖 Documentation
 
-All documentation is located in the [`docs/`](docs/) folder:
+All documentation is organized by feature in the [`docs/`](docs/) folder:
 
 - **[📋 Documentation Index](docs/INDEX.md)** - Complete documentation overview
-- **[🛠️ Setup Guide](docs/SETUP_GUIDE.md)** - Detailed installation instructions
-- **[📅 Calendar Integration](docs/CALENDAR_INTEGRATION_README.md)** - Calendar setup and usage
-- **[🗄️ Database Schema](docs/DATABASE_SCHEMA.md)** - Complete database documentation
-- **[🔧 API Reference](docs/API_DOCUMENTATION.md)** - API endpoints documentation
+- **[🛠️ Setup & Installation](docs/setup/)** - Installation, configuration, deployment
+- **[📅 Calendar Integration](docs/calendar-integration/)** - Google/Microsoft calendar setup
+- **[🗄️ Database Schema](docs/database/)** - Complete database documentation  
+- **[� API Reference](docs/api/)** - Endpoints, Swagger, testing tools
+- **[🔐 OAuth Integration](docs/oauth-integration/)** - Google/Microsoft OAuth setup
+- **[🛠️ Development](docs/development/)** - Contributing, architecture, standards
 
 ## ✨ Features
 
@@ -95,8 +97,8 @@ All documentation is located in the [`docs/`](docs/) folder:
 
 ### **Full API Documentation**
 - **Swagger UI**: http://localhost:3000/api-docs
-- **[Complete API Docs](docs/API_DOCUMENTATION.md)**
-- **[Postman Collection](docs/api_collection.json)**
+- **[Complete API Docs](docs/api/API_DOCUMENTATION.md)**
+- **[Postman Collection](docs/api/api_collection.json)**
 
 ## 🧪 Testing
 
@@ -118,7 +120,7 @@ curl -X POST http://localhost:3000/api/v1/auth/login \
   -d '{"email":"demo@example.com","password":"password123"}'
 ```
 
-More testing examples in [Calendar Quick Reference](docs/CALENDAR_QUICK_REFERENCE.md)
+More testing examples in [Calendar Quick Reference](docs/calendar-integration/CALENDAR_QUICK_REFERENCE.md)
 
 ## 🗄️ Database
 
@@ -130,7 +132,7 @@ More testing examples in [Calendar Quick Reference](docs/CALENDAR_QUICK_REFERENC
 - `scheduler_jobs`, `ai_summaries`, `alerts`
 - `crypto_data_caches`, `n8n_webhook_logs`
 
-See [Database Schema Documentation](docs/DATABASE_SCHEMA.md) for complete details.
+See [Database Schema Documentation](docs/database/DATABASE_SCHEMA.md) for complete details.
 
 ## 🛠️ Tech Stack
 
@@ -159,7 +161,7 @@ bundle exec sidekiq
 bundle exec rubocop
 ```
 
-See [Contributing Guidelines](docs/CONTRIBUTING.md) for detailed development setup.
+See [Contributing Guidelines](docs/development/CONTRIBUTING.md) for detailed development setup.
 
 ## 📦 Deployment
 
@@ -174,7 +176,7 @@ docker-compose up -d
 - Setup Redis and PostgreSQL
 - Run migrations: `rails db:migrate`
 
-See [Setup Guide](docs/SETUP_GUIDE.md) for production deployment details.
+See [Setup Guide](docs/setup/SETUP_GUIDE.md) for production deployment details.
 
 ## 🔐 Environment Variables
 
@@ -201,7 +203,7 @@ LOCKBOX_MASTER_KEY=your_lockbox_key
 
 1. Fork the repository
 2. Create a feature branch
-3. Follow the [Contributing Guidelines](docs/CONTRIBUTING.md)
+3. Follow the [Contributing Guidelines](docs/development/CONTRIBUTING.md)
 4. Submit a pull request
 
 ## 📄 License
