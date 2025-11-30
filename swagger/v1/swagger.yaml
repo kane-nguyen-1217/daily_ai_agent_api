@@ -1021,6 +1021,73 @@ paths:
                     type: object
         '401':
           description: Unauthorized
+  
+  /api/v1/calendar/{provider}/connect:
+    get:
+      summary: Get OAuth authorization URL for calendar provider
+      tags:
+        - Calendar
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: provider
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [google, microsoft]
+      responses:
+        '200':
+          description: Authorization URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  authorization_url:
+                    type: string
+              examples:
+                google:
+                  summary: Google Calendar authorization
+                  value:
+                    authorization_url: "https://accounts.google.com/o/oauth2/v2/auth?..."
+        '400':
+          description: Invalid provider
+        '401':
+          description: Unauthorized
+  
+  /api/v1/calendar/{provider}/callback:
+    get:
+      summary: OAuth callback endpoint for calendar provider
+      description: This endpoint is called by the OAuth provider after user authorization. It exchanges the authorization code for tokens and creates/updates the calendar account.
+      tags:
+        - Calendar
+      parameters:
+        - name: provider
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [google, microsoft]
+        - name: code
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Authorization code from OAuth provider
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+          description: State parameter containing user information
+      responses:
+        '302':
+          description: Redirects to frontend with success/error status
+        '400':
+          description: Missing authorization code
+        '404':
+          description: User not found
 
 components:
   securitySchemes:

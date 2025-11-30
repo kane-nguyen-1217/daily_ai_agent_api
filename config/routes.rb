@@ -13,55 +13,55 @@ Rails.application.routes.draw do
       post '/auth/login', to: 'authentication#login'
       post '/auth/refresh', to: 'authentication#refresh'
       post '/auth/logout', to: 'authentication#logout'
-      
+
       # User profile
       get '/users/profile', to: 'users#profile'
       put '/users/profile', to: 'users#update_profile'
-      
+
       # OAuth tokens management (Google Calendar/Gmail)
-      resources :oauth_tokens, only: [:index, :create, :destroy] do
+      resources :oauth_tokens, only: %i[index create destroy] do
         collection do
           post '/google/callback', to: 'oauth_tokens#google_callback'
           get '/google/authorize', to: 'oauth_tokens#google_authorize'
         end
       end
-      
+
       # Telegram linking
-      resources :telegram_links, only: [:index, :create, :destroy] do
+      resources :telegram_links, only: %i[index create destroy] do
         collection do
           post '/verify', to: 'telegram_links#verify'
         end
       end
-      
+
       # Automation settings
-      resources :automation_settings, only: [:index, :show, :create, :update, :destroy]
-      
+      resources :automation_settings, only: %i[index show create update destroy]
+
       # Daily scheduler jobs
-      resources :scheduler_jobs, only: [:index, :show, :create, :update, :destroy] do
+      resources :scheduler_jobs, only: %i[index show create update destroy] do
         member do
           post '/run', to: 'scheduler_jobs#run_now'
           put '/enable', to: 'scheduler_jobs#enable'
           put '/disable', to: 'scheduler_jobs#disable'
         end
       end
-      
+
       # AI summaries
-      resources :ai_summaries, only: [:index, :show, :create] do
+      resources :ai_summaries, only: %i[index show create] do
         collection do
           post '/generate', to: 'ai_summaries#generate'
         end
       end
-      
+
       # Crypto data
-      resources :crypto_data, only: [:index, :show] do
+      resources :crypto_data, only: %i[index show] do
         collection do
           get '/prices', to: 'crypto_data#current_prices'
           get '/historical/:symbol', to: 'crypto_data#historical'
         end
       end
-      
+
       # Alert history
-      resources :alerts, only: [:index, :show, :create] do
+      resources :alerts, only: %i[index show create] do
         collection do
           get '/recent', to: 'alerts#recent'
         end
@@ -69,13 +69,17 @@ Rails.application.routes.draw do
           put '/acknowledge', to: 'alerts#acknowledge'
         end
       end
-      
+
       # n8n integration callbacks
       namespace :webhooks do
         post '/n8n/workflow', to: 'n8n#workflow_callback'
         post '/n8n/execute', to: 'n8n#execute'
         get '/n8n/status/:job_id', to: 'n8n#status'
       end
+
+      # Calendar OAuth integration
+      get '/calendar/:provider/connect', to: 'calendar#connect'
+      get '/calendar/:provider/callback', to: 'calendar#callback'
     end
   end
 

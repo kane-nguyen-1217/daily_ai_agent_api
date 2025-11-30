@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_23_000009) do
+ActiveRecord::Schema[7.0].define(version: 2025_11_25_143906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_23_000009) do
     t.index ["user_id"], name: "index_automation_settings_on_user_id"
   end
 
+  create_table "calendar_accounts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "provider", null: false
+    t.string "email"
+    t.text "access_token"
+    t.text "refresh_token"
+    t.datetime "expires_at"
+    t.jsonb "meta", default: {}
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["active"], name: "index_calendar_accounts_on_active"
+    t.index ["provider"], name: "index_calendar_accounts_on_provider"
+    t.index ["user_id", "provider", "email"], name: "index_calendar_accounts_on_user_id_and_provider_and_email", unique: true
+    t.index ["user_id"], name: "index_calendar_accounts_on_user_id"
+  end
+
   create_table "crypto_data_caches", force: :cascade do |t|
     t.string "symbol", null: false
     t.decimal "price", precision: 20, scale: 8
@@ -95,6 +112,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_23_000009) do
     t.index ["status"], name: "index_n8n_webhook_logs_on_status"
     t.index ["user_id"], name: "index_n8n_webhook_logs_on_user_id"
     t.index ["workflow_id"], name: "index_n8n_webhook_logs_on_workflow_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.text "body"
+    t.jsonb "data", default: {}
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_notifications_on_created_at"
+    t.index ["user_id", "read_at"], name: "index_notifications_on_user_id_and_read_at"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "oauth_tokens", force: :cascade do |t|
@@ -149,18 +179,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_23_000009) do
     t.string "email", null: false
     t.string "password_digest", null: false
     t.string "full_name"
-    t.string "timezone", default: "UTC"
+    t.string "timezone", default: "Asia/Ho_Chi_Minh"
     t.boolean "active", default: true
     t.datetime "last_login_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "digest_hour", default: 8
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "ai_summaries", "users"
   add_foreign_key "alerts", "users"
   add_foreign_key "automation_settings", "users"
+  add_foreign_key "calendar_accounts", "users"
   add_foreign_key "n8n_webhook_logs", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "oauth_tokens", "users"
   add_foreign_key "scheduler_jobs", "users"
   add_foreign_key "telegram_links", "users"
