@@ -1,327 +1,219 @@
 # Daily AI Agent API
 
-A comprehensive Ruby on Rails backend API for a multi-user Personal AI Agent platform. This API provides endpoints for user authentication, OAuth integration, Telegram linking, automation settings, scheduled jobs, AI summary generation, crypto data fetching, alert management, and n8n integration.
+A comprehensive Ruby on Rails API backend for a Personal AI Agent platform with calendar integration, automation, and multi-service connectivity.
 
-## Features
+## 🚀 Quick Start
 
-- **User Authentication**: JWT-based authentication with refresh tokens
-- **OAuth Integration**: Google Calendar and Gmail OAuth token management
-- **Telegram Integration**: Link and verify Telegram accounts for notifications
-- **Automation Settings**: Configure various automation types (calendar, email, crypto, etc.)
-- **Scheduler Jobs**: Daily scheduler with cron-like syntax for recurring tasks
-- **AI Summaries**: Generate AI-powered daily/weekly/monthly summaries
-- **Crypto Data**: Real-time cryptocurrency price tracking and alerts
-- **Alert System**: Multi-severity alert system with notification support
-- **n8n Integration**: Webhook callbacks and workflow execution
-
-## Technology Stack
-
-- **Ruby**: 3.3.x
-- **Rails**: 7.0.x
-- **Database**: PostgreSQL
-- **Background Jobs**: Sidekiq with Redis
-- **Authentication**: JWT tokens
-- **Encryption**: Lockbox for sensitive data
-- **HTTP Client**: HTTParty for external API calls
-
-## Setup
-
-### Prerequisites
-
-- Ruby 3.3.x
-- PostgreSQL
-- Redis (for Sidekiq)
-
-### Installation
-
-1. Clone the repository:
 ```bash
+# Clone and setup
 git clone https://github.com/kane-nguyen-1217/daily_ai_agent_api.git
 cd daily_ai_agent_api
-```
-
-2. Install dependencies:
-```bash
 bundle install
-```
 
-3. Set up environment variables:
-```bash
+# Configure environment
 cp .env.example .env
 # Edit .env with your configuration
+
+# Setup database
+rails db:create db:migrate db:seed
+
+# Start services
+rails server                 # API server (port 3000)
+bundle exec sidekiq         # Background jobs
 ```
 
-4. Create and migrate the database:
-```bash
-rails db:create
-rails db:migrate
+## 📖 Documentation
+
+All documentation is located in the [`docs/`](docs/) folder:
+
+- **[📋 Documentation Index](docs/INDEX.md)** - Complete documentation overview
+- **[🛠️ Setup Guide](docs/SETUP_GUIDE.md)** - Detailed installation instructions
+- **[📅 Calendar Integration](docs/CALENDAR_INTEGRATION_README.md)** - Calendar setup and usage
+- **[🗄️ Database Schema](docs/DATABASE_SCHEMA.md)** - Complete database documentation
+- **[🔧 API Reference](docs/API_DOCUMENTATION.md)** - API endpoints documentation
+
+## ✨ Features
+
+### **Calendar Integration**
+- 📅 Google Calendar & Microsoft Outlook integration
+- 🔄 Automatic daily digest delivery
+- 🔐 Secure OAuth token management with encryption
+- ⏰ Timezone-aware scheduling
+
+### **Automation System**
+- ⚡ User-defined automation settings
+- 📝 Cron-based scheduled jobs
+- 🔄 Background job processing with Sidekiq
+- 📊 AI-powered summaries
+
+### **Multi-Service Integration**
+- 🤖 Telegram bot integration
+- 💰 Cryptocurrency data tracking
+- 🔗 n8n workflow integration
+- 🚨 Alert and notification system
+
+### **Security & Performance**
+- 🔒 JWT-based authentication
+- 🔐 Lockbox encryption for sensitive data
+- 📊 PostgreSQL with optimized indexing
+- 🚀 Redis-backed background jobs
+
+## 🏗️ Architecture
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │────│   Rails API     │────│   PostgreSQL    │
+│   (External)    │    │   (Port 3000)   │    │   Database      │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                              │
+                              │
+                       ┌─────────────────┐    ┌─────────────────┐
+                       │   Sidekiq       │────│   Redis         │
+                       │   (Background)  │    │   (Job Queue)   │
+                       └─────────────────┘    └─────────────────┘
+                              │
+                       ┌─────────────────┐
+                       │   External APIs │
+                       │   • Google Cal  │
+                       │   • Microsoft   │
+                       │   • Telegram    │
+                       │   • Crypto APIs │
+                       └─────────────────┘
 ```
 
-5. Start the server:
+## 🔗 API Endpoints
+
+### **Authentication**
+- `POST /api/v1/auth/register` - User registration
+- `POST /api/v1/auth/login` - User login
+- `POST /api/v1/auth/refresh` - Token refresh
+
+### **Calendar Integration**
+- `GET /api/v1/calendar/google/connect` - Google OAuth
+- `GET /api/v1/calendar/microsoft/connect` - Microsoft OAuth
+- `GET /api/v1/calendar/:provider/callback` - OAuth callback
+
+### **Full API Documentation**
+- **Swagger UI**: http://localhost:3000/api-docs
+- **[Complete API Docs](docs/API_DOCUMENTATION.md)**
+- **[Postman Collection](docs/api_collection.json)**
+
+## 🧪 Testing
+
+### **Calendar Integration Testing**
 ```bash
+# Test calendar connection
+rails calendar:test_digest[1,"2025-11-30"]
+
+# Check calendar accounts
+rails console
+User.first.calendar_accounts.active
+```
+
+### **API Testing**
+```bash
+# Test authentication
+curl -X POST http://localhost:3000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"demo@example.com","password":"password123"}'
+```
+
+More testing examples in [Calendar Quick Reference](docs/CALENDAR_QUICK_REFERENCE.md)
+
+## 🗄️ Database
+
+**12 Tables** with comprehensive relationships:
+- `users` (central hub)
+- `calendar_accounts` (Google/Microsoft tokens)
+- `notifications` (in-app notifications)
+- `oauth_tokens`, `telegram_links`, `automation_settings`
+- `scheduler_jobs`, `ai_summaries`, `alerts`
+- `crypto_data_caches`, `n8n_webhook_logs`
+
+See [Database Schema Documentation](docs/DATABASE_SCHEMA.md) for complete details.
+
+## 🛠️ Tech Stack
+
+- **Backend**: Ruby 3.3, Rails 7.0
+- **Database**: PostgreSQL with JSONB
+- **Background Jobs**: Sidekiq + Redis
+- **Authentication**: JWT tokens
+- **Encryption**: Lockbox for sensitive data
+- **API Documentation**: Swagger/OpenAPI
+- **Testing**: RSpec, Factory Bot
+
+## 🔧 Development
+
+```bash
+# Install dependencies
+bundle install
+
+# Run tests
+bundle exec rspec
+
+# Start development
 rails server
-```
-
-6. Start Sidekiq for background jobs:
-```bash
 bundle exec sidekiq
+
+# Check code quality
+bundle exec rubocop
 ```
 
-## API Documentation
+See [Contributing Guidelines](docs/CONTRIBUTING.md) for detailed development setup.
 
-### Authentication Endpoints
+## 📦 Deployment
 
-#### Register
-```
-POST /api/v1/auth/register
-Body: { email, password, password_confirmation, full_name, timezone }
-```
-
-#### Login
-```
-POST /api/v1/auth/login
-Body: { email, password }
+### **Docker**
+```bash
+docker-compose up -d
 ```
 
-#### Refresh Token
-```
-POST /api/v1/auth/refresh
-Body: { refresh_token }
+### **Production**
+- Set `RAILS_ENV=production`
+- Configure `RAILS_MASTER_KEY`
+- Setup Redis and PostgreSQL
+- Run migrations: `rails db:migrate`
+
+See [Setup Guide](docs/SETUP_GUIDE.md) for production deployment details.
+
+## 🔐 Environment Variables
+
+Key configuration (see `.env.example`):
+
+```bash
+# Database
+DB_HOST=localhost
+DB_USERNAME=postgres
+DB_PASSWORD=your_password
+
+# Calendar OAuth
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_secret
+MICROSOFT_CLIENT_ID=your_microsoft_client_id
+MICROSOFT_CLIENT_SECRET=your_microsoft_secret
+
+# Security
+JWT_SECRET_KEY=your_jwt_secret
+LOCKBOX_MASTER_KEY=your_lockbox_key
 ```
 
-#### Logout
-```
-POST /api/v1/auth/logout
-Headers: Authorization: Bearer <token>
-```
+## 🤝 Contributing
 
-### User Profile
+1. Fork the repository
+2. Create a feature branch
+3. Follow the [Contributing Guidelines](docs/CONTRIBUTING.md)
+4. Submit a pull request
 
-#### Get Profile
-```
-GET /api/v1/users/profile
-Headers: Authorization: Bearer <token>
-```
-
-#### Update Profile
-```
-PUT /api/v1/users/profile
-Headers: Authorization: Bearer <token>
-Body: { full_name, timezone, password, password_confirmation }
-```
-
-### OAuth Tokens (Google Calendar/Gmail)
-
-#### List OAuth Tokens
-```
-GET /api/v1/oauth_tokens
-Headers: Authorization: Bearer <token>
-```
-
-#### Get Google Authorization URL
-```
-GET /api/v1/oauth_tokens/google/authorize
-Headers: Authorization: Bearer <token>
-Query: { redirect_uri, scope }
-```
-
-#### Google OAuth Callback
-```
-POST /api/v1/oauth_tokens/google/callback
-Headers: Authorization: Bearer <token>
-Body: { code, redirect_uri }
-```
-
-#### Delete OAuth Token
-```
-DELETE /api/v1/oauth_tokens/:id
-Headers: Authorization: Bearer <token>
-```
-
-### Telegram Links
-
-#### List Telegram Links
-```
-GET /api/v1/telegram_links
-Headers: Authorization: Bearer <token>
-```
-
-#### Create Telegram Link
-```
-POST /api/v1/telegram_links
-Headers: Authorization: Bearer <token>
-Body: { telegram_user_id, telegram_username }
-```
-
-#### Verify Telegram Link
-```
-POST /api/v1/telegram_links/verify
-Headers: Authorization: Bearer <token>
-Body: { id, verification_code }
-```
-
-### Automation Settings
-
-#### List Automation Settings
-```
-GET /api/v1/automation_settings
-Headers: Authorization: Bearer <token>
-Query: { enabled, type }
-```
-
-#### Create Automation Setting
-```
-POST /api/v1/automation_settings
-Headers: Authorization: Bearer <token>
-Body: { name, automation_type, configuration, enabled, priority }
-```
-
-#### Update Automation Setting
-```
-PUT /api/v1/automation_settings/:id
-Headers: Authorization: Bearer <token>
-Body: { name, automation_type, configuration, enabled, priority }
-```
-
-### Scheduler Jobs
-
-#### List Scheduler Jobs
-```
-GET /api/v1/scheduler_jobs
-Headers: Authorization: Bearer <token>
-```
-
-#### Create Scheduler Job
-```
-POST /api/v1/scheduler_jobs
-Headers: Authorization: Bearer <token>
-Body: { name, job_type, schedule, job_parameters, enabled }
-```
-
-#### Run Job Now
-```
-POST /api/v1/scheduler_jobs/:id/run
-Headers: Authorization: Bearer <token>
-```
-
-#### Enable/Disable Job
-```
-PUT /api/v1/scheduler_jobs/:id/enable
-PUT /api/v1/scheduler_jobs/:id/disable
-Headers: Authorization: Bearer <token>
-```
-
-### AI Summaries
-
-#### List AI Summaries
-```
-GET /api/v1/ai_summaries
-Headers: Authorization: Bearer <token>
-```
-
-#### Generate AI Summary
-```
-POST /api/v1/ai_summaries/generate
-Headers: Authorization: Bearer <token>
-Body: { summary_type, summary_date, ai_model }
-```
-
-### Crypto Data
-
-#### Get Current Prices
-```
-GET /api/v1/crypto_data/prices
-Headers: Authorization: Bearer <token>
-Query: { symbols: "BTC,ETH,SOL" }
-```
-
-#### Get Historical Data
-```
-GET /api/v1/crypto_data/historical/:symbol
-Headers: Authorization: Bearer <token>
-Query: { days: 7 }
-```
-
-### Alerts
-
-#### List Alerts
-```
-GET /api/v1/alerts
-Headers: Authorization: Bearer <token>
-Query: { alert_type, severity, unacknowledged }
-```
-
-#### Create Alert
-```
-POST /api/v1/alerts
-Headers: Authorization: Bearer <token>
-Body: { alert_type, title, message, severity, metadata }
-```
-
-#### Acknowledge Alert
-```
-PUT /api/v1/alerts/:id/acknowledge
-Headers: Authorization: Bearer <token>
-```
-
-### n8n Webhooks
-
-#### Workflow Callback
-```
-POST /api/v1/webhooks/n8n/workflow
-Headers: X-N8N-Signature: <signature>
-Body: { workflow_id, execution_id, user_id, ... }
-```
-
-#### Execute Workflow
-```
-POST /api/v1/webhooks/n8n/execute
-Headers: Authorization: Bearer <token>
-Body: { workflow_id, workflow_params }
-```
-
-#### Check Execution Status
-```
-GET /api/v1/webhooks/n8n/status/:job_id
-Headers: Authorization: Bearer <token>
-```
-
-## Security Features
-
-- JWT token-based authentication
-- Encrypted storage of OAuth tokens using Lockbox
-- Secure password hashing with bcrypt
-- CORS configuration
-- Request parameter filtering for sensitive data
-- n8n webhook signature verification
-
-## Background Jobs
-
-The following background jobs are implemented using Sidekiq:
-
-- **SchedulerJobWorker**: Executes scheduled jobs (daily summaries, crypto checks, etc.)
-- **AiSummaryWorker**: Generates AI summaries asynchronously
-- **N8nWebhookProcessorWorker**: Processes n8n webhook callbacks
-
-## Environment Variables
-
-See `.env.example` for required environment variables including:
-- Database configuration
-- JWT secret key
-- OAuth credentials (Google)
-- Telegram bot token
-- n8n integration settings
-- Crypto API configuration
-- OpenAI API key
-
-## License
+## 📄 License
 
 This project is licensed under the MIT License.
 
-## Contributing
+## 📞 Support
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
+- **Documentation**: [`docs/`](docs/) folder
+- **Issues**: GitHub Issues
+- **API Testing**: Swagger UI at http://localhost:3000/api-docs
+
+---
+
+Built with ❤️ using Ruby on Rails for comprehensive personal AI agent functionality.
