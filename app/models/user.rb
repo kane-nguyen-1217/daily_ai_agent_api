@@ -1,3 +1,23 @@
+# == Schema Information
+# Schema version: 20251125143906
+#
+# Table name: users
+#
+#  id              :bigint           not null, primary key
+#  active          :boolean          default(TRUE)
+#  digest_hour     :integer          default(8)
+#  email           :string           not null
+#  full_name       :string
+#  last_login_at   :datetime
+#  password_digest :string           not null
+#  timezone        :string           default("Asia/Ho_Chi_Minh")
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_email  (email) UNIQUE
+#
 class User < ApplicationRecord
   has_secure_password
 

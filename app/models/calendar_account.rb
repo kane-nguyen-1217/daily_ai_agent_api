@@ -1,3 +1,31 @@
+# == Schema Information
+# Schema version: 20251125143906
+#
+# Table name: calendar_accounts
+#
+#  id            :bigint           not null, primary key
+#  access_token  :text
+#  active        :boolean          default(TRUE)
+#  email         :string
+#  expires_at    :datetime
+#  meta          :jsonb
+#  provider      :string           not null
+#  refresh_token :text
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  user_id       :bigint           not null
+#
+# Indexes
+#
+#  index_calendar_accounts_on_active                          (active)
+#  index_calendar_accounts_on_provider                        (provider)
+#  index_calendar_accounts_on_user_id                         (user_id)
+#  index_calendar_accounts_on_user_id_and_provider_and_email  (user_id,provider,email) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class CalendarAccount < ApplicationRecord
   belongs_to :user
 

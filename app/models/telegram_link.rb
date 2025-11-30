@@ -1,3 +1,29 @@
+# == Schema Information
+# Schema version: 20251125143906
+#
+# Table name: telegram_links
+#
+#  id                :bigint           not null, primary key
+#  active            :boolean          default(TRUE)
+#  telegram_username :string
+#  verification_code :string
+#  verified          :boolean          default(FALSE)
+#  verified_at       :datetime
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  telegram_user_id  :string           not null
+#  user_id           :bigint           not null
+#
+# Indexes
+#
+#  index_telegram_links_on_telegram_user_id    (telegram_user_id) UNIQUE
+#  index_telegram_links_on_user_id             (user_id)
+#  index_telegram_links_on_user_id_and_active  (user_id,active)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class TelegramLink < ApplicationRecord
   belongs_to :user
   

@@ -1,3 +1,28 @@
+# == Schema Information
+# Schema version: 20251125143906
+#
+# Table name: automation_settings
+#
+#  id              :bigint           not null, primary key
+#  automation_type :string           not null
+#  configuration   :json
+#  enabled         :boolean          default(TRUE)
+#  name            :string           not null
+#  priority        :integer          default(0)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  user_id         :bigint           not null
+#
+# Indexes
+#
+#  index_automation_settings_on_enabled                      (enabled)
+#  index_automation_settings_on_user_id                      (user_id)
+#  index_automation_settings_on_user_id_and_automation_type  (user_id,automation_type)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class AutomationSetting < ApplicationRecord
   belongs_to :user
   

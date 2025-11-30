@@ -1,3 +1,33 @@
+# == Schema Information
+# Schema version: 20251125143906
+#
+# Table name: scheduler_jobs
+#
+#  id             :bigint           not null, primary key
+#  enabled        :boolean          default(TRUE)
+#  job_parameters :json
+#  job_type       :string           not null
+#  last_error     :text
+#  last_run_at    :datetime
+#  last_status    :string
+#  name           :string           not null
+#  next_run_at    :datetime
+#  schedule       :string           not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  user_id        :bigint           not null
+#
+# Indexes
+#
+#  index_scheduler_jobs_on_job_type             (job_type)
+#  index_scheduler_jobs_on_next_run_at          (next_run_at)
+#  index_scheduler_jobs_on_user_id              (user_id)
+#  index_scheduler_jobs_on_user_id_and_enabled  (user_id,enabled)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class SchedulerJob < ApplicationRecord
   belongs_to :user
   

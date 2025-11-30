@@ -1,3 +1,28 @@
+# == Schema Information
+# Schema version: 20251125143906
+#
+# Table name: oauth_tokens
+#
+#  id                       :bigint           not null, primary key
+#  access_token_ciphertext  :text
+#  expires_at               :datetime
+#  provider                 :string           not null
+#  refresh_token_ciphertext :text
+#  scope                    :string
+#  token_metadata           :json
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  user_id                  :bigint           not null
+#
+# Indexes
+#
+#  index_oauth_tokens_on_user_id               (user_id)
+#  index_oauth_tokens_on_user_id_and_provider  (user_id,provider) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class OauthToken < ApplicationRecord
   belongs_to :user
   

@@ -1,3 +1,31 @@
+# == Schema Information
+# Schema version: 20251125143906
+#
+# Table name: ai_summaries
+#
+#  id           :bigint           not null, primary key
+#  ai_model     :string
+#  content      :text
+#  source_data  :json
+#  status       :string           default("pending")
+#  summary_date :date
+#  summary_type :string           not null
+#  token_count  :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  user_id      :bigint           not null
+#
+# Indexes
+#
+#  index_ai_summaries_on_status                    (status)
+#  index_ai_summaries_on_summary_type              (summary_type)
+#  index_ai_summaries_on_user_id                   (user_id)
+#  index_ai_summaries_on_user_id_and_summary_date  (user_id,summary_date)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class AiSummary < ApplicationRecord
   belongs_to :user
   
