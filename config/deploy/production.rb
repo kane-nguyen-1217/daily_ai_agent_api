@@ -26,7 +26,7 @@ set :branch, 'main'
 
 # SSH Options
 set :ssh_options, {
-  keys: %w(~/.ssh/id_rsa),
+  keys: %w(~/.ssh/id_rsa_personal),
   forward_agent: true,
   auth_methods: %w(publickey),
   port: 22

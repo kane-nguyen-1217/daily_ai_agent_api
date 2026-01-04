@@ -1,5 +1,5 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.19.2"
+# lock "~> 3.19.2"
 
 set :application, "daily_ai_agent_api"
 set :repo_url, "git@github.com:kane-nguyen-1217/daily_ai_agent_api.git"
@@ -16,6 +16,11 @@ set :format_options, command_output: true, log_file: "log/capistrano.log", color
 
 # SSH settings
 set :pty, true
+set :ssh_options, {
+  keys: %w(~/.ssh/id_rsa_personal ~/.ssh/id_ed25519_personal),
+  forward_agent: true,
+  auth_methods: %w(publickey ssh-agent)
+}
 
 # Linked files and directories
 append :linked_files, ".env", "config/master.key"
@@ -33,7 +38,7 @@ set :keep_releases, 5
 
 # Rbenv settings
 set :rbenv_type, :user
-set :rbenv_ruby, '3.3.0'
+set :rbenv_ruby, '3.3.3'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails puma pumactl}
 
@@ -62,29 +67,16 @@ set :conditionally_migrate, true
 set :migration_role, :app
 
 # Bundle settings
-set :bundle_flags, '--deployment --quiet'
+set :bundle_command, 'bundle'
+set :bundle_flags, '--force-ruby-platform'
 set :bundle_env_variables, { 'NOKOGIRI_USE_SYSTEM_LIBRARIES' => 1 }
-
 # Deployment hooks
 namespace :deploy do
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 10 do
-      invoke 'puma:restart'
-      invoke 'sidekiq:restart'
-    end
-  end
-
-  after :publishing, :restart
-
-  desc 'Upload .env file'
-  task :upload_env do
+  desc 'Update bundler'
+  task :update_bundler do
     on roles(:app) do
-      unless test("[ -f #{shared_path}/.env ]")
-        info "Uploading .env file to #{shared_path}/.env"
-        upload! '.env.production', "#{shared_path}/.env"
-      else
-        info ".env file already exists on server"
+      with rails_env: fetch(:rails_env) do
+        execute "#{fetch(:rbenv_prefix)} gem install bundler"
       end
     end
   end
@@ -100,3 +92,5 @@ namespace :deploy do
     end
   end
 end
+
+before 'bundler:install', 'deploy:update_bundler'
